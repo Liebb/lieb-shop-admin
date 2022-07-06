@@ -8,7 +8,7 @@ export default function LoginPage() {
   const passwordRef = useRef(null);
   const auth = useAuth();
   const router = useRouter();
-  
+
   const submitHandler = (event) => {
     //evitar que el compartamiento del formulario sea desencadenado
     event.preventDefault();
@@ -16,16 +16,17 @@ export default function LoginPage() {
     //Obtenemos los valores de contraseña y email
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    
-    auth.signIn(email, password).then(() => {
-      router.push('/dashboard');
-    },
-    (reason) => {
-      console.log('Login Failed');
-      console.error(reason);
-      auth.setError('Invalid Username or Password');
-    }
-  ); 
+
+    auth.signIn(email, password).then(
+      () => {
+        router.push('/dashboard');
+      },
+      (reason) => {
+        console.log('Login Failed');
+        console.error(reason);
+        auth.setError('Invalid Username or Password');
+      }
+    );
   };
 
   return (

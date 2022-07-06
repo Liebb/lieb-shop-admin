@@ -32,7 +32,7 @@ function useProvideAuth() {
       Cookie.set('token', token, { expires: 5 });
 
       axios.defaults.headers.Authorization = `Bearer ${token}`;
-      const {data: user} = await axios.get(endPoints.auth.profile);
+      const { data: user } = await axios.get(endPoints.auth.profile);
       console.log(user);
       setUser(user);
     }
@@ -48,7 +48,7 @@ function useProvideAuth() {
   return {
     user,
     signIn,
-    error, 
+    error,
     setError,
     logout,
   };

@@ -17,7 +17,7 @@ const useAlert = (options) => {
   };
 
   return {
-    alert, 
+    alert,
     setAlert,
     toggleAlert,
   };
