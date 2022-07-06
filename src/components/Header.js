@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react';
 import { useAuth } from '@hooks/useAuth';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
@@ -24,7 +23,7 @@ export default function Header() {
   const userData = {
     name: auth?.user?.name,
     email: auth?.user?.email,
-    imageUrl: auth?.user?.avatar,
+    imageUrl: `https://ui-avatars.com/api/?name=${auth?.user?.name}`,
   };
 
   return (

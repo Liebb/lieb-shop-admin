@@ -16,12 +16,10 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState();
 
   const signIn = async (email, password) => {
     const options = {
       headers: {
-        //Para que maneje de forma correcta todas la solicitudes
         accept: '*/*',
         'Content-Type': 'application/json',
       },
@@ -30,10 +28,8 @@ function useProvideAuth() {
     if (access_token) {
       const token = access_token.access_token;
       Cookie.set('token', token, { expires: 5 });
-
       axios.defaults.headers.Authorization = `Bearer ${token}`;
       const { data: user } = await axios.get(endPoints.auth.profile);
-      console.log(user);
       setUser(user);
     }
   };
@@ -48,8 +44,6 @@ function useProvideAuth() {
   return {
     user,
     signIn,
-    error,
-    setError,
     logout,
   };
 }

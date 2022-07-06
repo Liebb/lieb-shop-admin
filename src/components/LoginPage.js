@@ -9,24 +9,14 @@ export default function LoginPage() {
   const auth = useAuth();
   const router = useRouter();
 
-  const submitHandler = (event) => {
-    //evitar que el compartamiento del formulario sea desencadenado
+  const submitHanlder = (event) => {
     event.preventDefault();
-
-    //Obtenemos los valores de contraseña y email
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    auth.signIn(email, password).then(
-      () => {
-        router.push('/dashboard');
-      },
-      (reason) => {
-        console.log('Login Failed');
-        console.error(reason);
-        auth.setError('Invalid Username or Password');
-      }
-    );
+    auth.signIn(email, password).then(() => {
+      router.push('/dashboard');
+    });
   };
 
   return (
@@ -37,8 +27,7 @@ export default function LoginPage() {
             <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
           </div>
-          {/* Desencadenamos la función */}
-          <form className="mt-8 space-y-6" onSubmit={submitHandler}>
+          <form className="mt-8 space-y-6" onSubmit={submitHanlder}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -82,7 +71,7 @@ export default function LoginPage() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="/reset" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </a>
               </div>
@@ -99,11 +88,6 @@ export default function LoginPage() {
                 Sign in
               </button>
             </div>
-            {auth.error ? (
-              <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                <span className="font-medium">Login Failed!</span> {auth.error}
-              </div>
-            ) : null}
           </form>
         </div>
       </div>

@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckIcon, XCircleIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import Modal from '@common/Modal';
-import FormProduct from '@components/formProduct';
+import FormProduct from '@components/FormProduct';
 import axios from 'axios';
 import endPoints from '@services/api';
 import useAlert from '@hooks/useAlert';
 import Alert from '@common/Alert';
 import { deleteProduct } from '@services/api/products';
 
-//Hace render de todos los productos existentes
 export default function Products() {
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const { alert, setAlert, toggleAlert } = useAlert();
+
   useEffect(() => {
     async function getProducts() {
       const response = await axios.get(endPoints.products.allProducts);
@@ -27,23 +27,14 @@ export default function Products() {
   }, [alert]);
 
   const handleDelete = (id) => {
-    deleteProduct(id)
-      .then(() => {
-        setAlert({
-          active: true,
-          message: 'Product Deleted',
-          type: 'success',
-          autoClose: false,
-        });
-      })
-      .catch((error) => {
-        setAlert({
-          active: true,
-          message: error.message,
-          type: 'error',
-          autoClose: false,
-        });
+    deleteProduct(id).then(() => {
+      setAlert({
+        active: true,
+        message: 'Delete product successfully',
+        type: 'error',
+        autoClose: true,
       });
+    });
   };
 
   return (
@@ -51,7 +42,7 @@ export default function Products() {
       <Alert alert={alert} handleClose={toggleAlert} />
       <div className="lg:flex lg:items-center lg:justify-between mb-8">
         <div className="flex-1 min-w-0">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">List of products</h2>
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">List of Products</h2>
         </div>
         <div className="mt-5 flex lg:mt-0 lg:ml-4">
           <span className="sm:ml-3">
@@ -61,7 +52,7 @@ export default function Products() {
               onClick={() => setOpen(true)}
             >
               <CheckIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-              Add product
+              Add Product
             </button>
           </span>
         </div>
@@ -115,8 +106,8 @@ export default function Products() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <Link href={`/dashboard/edit/${product.id}`}>
-                          <a className="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        <Link href={`/dashboard/edit/${product.id}`} className="text-indigo-600 hover:text-indigo-900">
+                          Edit
                         </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
